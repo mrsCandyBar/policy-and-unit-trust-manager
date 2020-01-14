@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators, MedicalAidStoreState, IMedicalAidStoreState } from '../stores/medicalAidStore';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import CustomForm from '../components/form/customForm';
 
 interface IMedicalAidProps extends MedicalAidStoreState {
   classes: any;
@@ -47,32 +48,48 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
   render() {
     const { medicalAidList, selectedMedicalAid } = this.state;
 
-    return (
-      <main>
-        <Typography>
-          Medical Aid Page
-        </Typography>
+    const displaySelectedItem = (
+      <React.Fragment>
+        <Button onClick={() => this.props.selectMedicalAid()}> go back </Button>
+        <CustomForm 
+          selectedObject={selectedMedicalAid} 
+          updateItem={this.props.updateMedicalAid}
+          hideForm={this.props.selectMedicalAid}
+        />
+      </React.Fragment>
+    );
 
-        all medical aid policies
-
-        {medicalAidList.map(policy => {
-          return (
-            <React.Fragment>
-              <Typography key={policy.id}>
-                {policy.label}
-              </Typography>
-
-              <Button onClick={() => this.props.deleteMedicalAid(policy.id)}>
-                Remove
-              </Button>
-            </React.Fragment>
-          )
-        })}
+    const showListedItems = (
+      <React.Fragment>
+        <Typography>all medical aid policies</Typography>
+        <List>
+          {medicalAidList.map(policy => {
+            return (
+              <ListItem
+                key={policy.id}
+                onClick={() => this.props.selectMedicalAid(policy)}
+              >
+                <ListItemText primary={policy.label} />
+                <ListItemSecondaryAction>
+                  <Button onClick={() => this.props.deleteMedicalAid(policy.id)}>
+                    remove
+                  </Button>
+                </ListItemSecondaryAction>
+              </ListItem>
+            )
+          })}
+        </List>
 
         <Button onClick={this.addMedicalAidPolicy}>
-          Add Slide
+          Add new medical aid policy
         </Button>
+      </React.Fragment>
+    )
 
+    return (
+      <main>
+        <Typography>Medical Aid Page</Typography>
+        {selectedMedicalAid ? displaySelectedItem : showListedItems}
       </main>
     )
   }

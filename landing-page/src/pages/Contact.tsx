@@ -24,7 +24,7 @@ class Contact extends Component<IContactProps, IContactState> {
       <main>
         Contact Page<br/>
 
-        <a onClick={() => history.push('/about')}>Go to not found page</a>
+        <a onClick={() => history.push('/about')} href={'/about'}>Go to not found page</a>
       </main>
     )
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import NavigationMenu from '../../routing/navigation';
 
 const useStyles = {

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators, LifeInsuranceStoreState, ILifeInsuranceStoreState } from '../stores/lifeInsuranceStore';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import CustomForm from '../components/form/customForm';
 
 interface ILifeInsuranceProps extends LifeInsuranceStoreState {
   classes: any;
@@ -47,32 +48,48 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
   render() {
     const { lifeInsuranceList, selectedLifeInsurance } = this.state;
 
-    return (
-      <main>
-        <Typography>
-          Life Insurance Page
-        </Typography>
+    const displaySelectedItem = (
+      <React.Fragment>
+        <Button onClick={() => this.props.selectLifeInsurance()}> go back </Button>
+        <CustomForm 
+          selectedObject={selectedLifeInsurance} 
+          updateItem={this.props.updateLifeInsurance}
+          hideForm={this.props.selectLifeInsurance}
+        />
+      </React.Fragment>
+    );
 
-        all life insurance policies
-
-        {lifeInsuranceList.map(policy => {
-          return (
-            <React.Fragment>
-              <Typography key={policy.id}>
-                {policy.label}
-              </Typography>
-
-              <Button onClick={() => this.props.deleteLifeInsurance(policy.id)}>
-                Remove
-              </Button>
-            </React.Fragment>
-          )
-        })}
+    const showListedItems = (
+      <React.Fragment>
+        <Typography>all life insurance policies</Typography>
+        <List>
+          {lifeInsuranceList.map(policy => {
+            return (
+              <ListItem
+                key={policy.id}
+                onClick={() => this.props.selectLifeInsurance(policy)}
+              >
+                <ListItemText primary={policy.label} />
+                <ListItemSecondaryAction>
+                  <Button onClick={() => this.props.deleteLifeInsurance(policy.id)}>
+                    remove
+                  </Button>
+                </ListItemSecondaryAction>
+              </ListItem>
+            )
+          })}
+        </List>
 
         <Button onClick={this.addLifeInsurancePolicy}>
-          Add Policy
+          Add new life insurance policy
         </Button>
+      </React.Fragment>
+    )
 
+    return (
+      <main>
+        <Typography>Life Insurance Page</Typography>
+        {selectedLifeInsurance ? displaySelectedItem : showListedItems}
       </main>
     )
   }

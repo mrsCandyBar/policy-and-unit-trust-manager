@@ -48,27 +48,36 @@ class CustomForm extends Component<ICustomFormProps, ICustomFormState> {
     })
   }
 
+  private dontShowProperty = (property: string) => {
+    return (property === 'id' || property === 'actionType');
+  }
+
   public mapProperty = (obj: any, nestedName?: string) => {
     const mapAllProperties: any = Object.keys(obj).map((propertyName: any, index: number) => {
-      const isObj = typeof (obj[propertyName]) == 'object';
-      const splitByMonth = split(propertyName.toLowerCase(), 'month');
-      const splitByDate = split(propertyName.toLowerCase(), 'date');
-      const splitByDay = split(propertyName.toLowerCase(), 'day');
-      const isDateObj = splitByMonth.length > 1 || splitByDate.length > 1 || splitByDay.length > 1;
+      const canShowPropertyValue:boolean = !this.dontShowProperty(propertyName);
+      if (canShowPropertyValue) {
+        const isObj = typeof (obj[propertyName]) == 'object';
+        const splitByMonth = split(propertyName.toLowerCase(), 'month');
+        const splitByDate = split(propertyName.toLowerCase(), 'date');
+        const splitByDay = split(propertyName.toLowerCase(), 'day');
+        const isDateObj = splitByMonth.length > 1 || splitByDate.length > 1 || splitByDay.length > 1;
 
-      return (isObj || isDateObj) ? (
-        isDateObj ? 
-          this.presentObj(obj, propertyName, splitByMonth.length > 1 ? 'month' : 'date', nestedName) : 
-          this.mapProperty(obj[propertyName], propertyName)
-      ) : this.presentObj(obj, propertyName, typeof (obj[propertyName]), nestedName)
+        return (isObj || isDateObj) ? (
+          isDateObj ?
+            this.presentObj(obj, propertyName, splitByMonth.length > 1 ? 'month' : 'date', nestedName) :
+            this.mapProperty(obj[propertyName], propertyName)
+        ) : this.presentObj(obj, propertyName, typeof (obj[propertyName]), nestedName)
+      }
+
+      return false;
     });
 
     return mapAllProperties;
   }
 
-  public presentObj = (obj: any, propertyName:string, type: string, nestedName?:string) => {
+  public presentObj = (obj: any, propertyName: string, type: string, nestedName?: string) => {
     return (
-      <Grid container>
+      <Grid container key={`${propertyName}_${obj.id}`}>
         <Grid item xs={3}>
           {nestedName ? `${nestedName} ${propertyName}` : propertyName}:
         </Grid>
