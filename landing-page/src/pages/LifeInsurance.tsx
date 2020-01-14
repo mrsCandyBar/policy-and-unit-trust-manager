@@ -17,9 +17,8 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
   public static getDerivedStateFromProps(nextProps: LifeInsuranceStoreState, prevState: ILifeInsuranceState): ILifeInsuranceState {
     const newState = {
       ...prevState,
-      activeSlide: nextProps.activeSlide,
-      numberOfSlides: nextProps.slideContent ? nextProps.slideContent.length : 0,
-      slideContent: nextProps.slideContent
+      lifeInsuranceList: nextProps.lifeInsuranceList,
+      selectedLifeInsurance: nextProps.selectedLifeInsurance
     }
     return newState;
   }
@@ -28,9 +27,8 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
     super(props);
     this.state = {
       classes: this.props.classes,
-      activeSlide: 0,
-      numberOfSlides: 0,
-      slideContent: []
+      lifeInsuranceList: this.props.lifeInsuranceList,
+      selectedLifeInsurance: this.props.selectedLifeInsurance
     }
   }
 
@@ -39,15 +37,15 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
   }
 
   public initialiseDataSet() {
-    this.props.getSlides();
+    this.props.getLifeInsuranceList();
   }
 
-  public addNewSlide = () => {
-    this.props.addSlide("New slide");
+  public addLifeInsurancePolicy = () => {
+    this.props.addLifeInsurance();
   }
 
   render() {
-    const { activeSlide, numberOfSlides, slideContent } = this.state;
+    const { lifeInsuranceList, selectedLifeInsurance } = this.state;
 
     return (
       <main>
@@ -55,25 +53,24 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
           Life Insurance Page
         </Typography>
 
-        active slide : {activeSlide}<br />
-        number of slides : {numberOfSlides}
+        all life insurance policies
 
-        {slideContent.map((slide, index) => {
+        {lifeInsuranceList.map(policy => {
           return (
             <React.Fragment>
-              <Typography key={index}>
-                {slide}
+              <Typography key={policy.id}>
+                {policy.label}
               </Typography>
 
-              <Button onClick={() => this.props.removeSlide(index)}>
-                Remove Slide
+              <Button onClick={() => this.props.deleteLifeInsurance(policy.id)}>
+                Remove
               </Button>
             </React.Fragment>
           )
         })}
 
-        <Button onClick={this.addNewSlide}>
-          Add Slide
+        <Button onClick={this.addLifeInsurancePolicy}>
+          Add Policy
         </Button>
 
       </main>

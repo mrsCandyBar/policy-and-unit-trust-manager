@@ -24,7 +24,7 @@ export const addUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>>
     return(dispatch: Dispatch<any>) => dispatch({type: addUnitTrust })
 }
 
-export const deleteUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (unitTrustId:string) => {
+export const deleteUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (unitTrustId: string) => {
     return(dispatch: Dispatch<any>) => dispatch({type: deleteUnitTrust, data: unitTrustId })
 }
 

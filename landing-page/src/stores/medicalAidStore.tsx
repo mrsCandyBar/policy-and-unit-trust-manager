@@ -1,51 +1,66 @@
 
-import { merge } from 'lodash';
+import { merge, findIndex } from 'lodash';
 import {
-    getSlides,
-    getSlidesAction,
-    updateSlide,
-    updateSlideAction,
-    addSlide,
-    addSlideAction,
-    removeSlide,
-    removeSlideAction,
+    getMedicalAidList,
+    getMedicalAidListAction,
+    selectMedicalAid,
+    selectMedicalAidAction,
+    updateMedicalAid,
+    updateMedicalAidAction,
+    addMedicalAid,
+    addMedicalAidAction,
+    deleteMedicalAid,
+    deleteMedicalAidAction,
     MedicalAidActions
 } from './actions/medicalAidActions';
+import MedicalAid from '../models/medicalAid';
 
 export interface IMedicalAidStoreState {
-    activeSlide: number,
-    numberOfSlides: number,
-    slideContent: Array<any>
+    medicalAidList: Array<MedicalAid>,
+    selectedMedicalAid?: MedicalAid
 }
 
-const initialState:IMedicalAidStoreState = {
-    activeSlide: 0,
-    numberOfSlides: 5,
-    slideContent: []
+const initialState: IMedicalAidStoreState = {
+    medicalAidList: [],
+    selectedMedicalAid: undefined
 }
 
 export const actionCreators = {
-    getSlides: getSlidesAction,
-    updateSlide: updateSlideAction,
-    addSlide: addSlideAction,
-    removeSlide: removeSlideAction,
+    getMedicalAidList: getMedicalAidListAction,
+    selectMedicalAid: selectMedicalAidAction,
+    updateMedicalAid: updateMedicalAidAction,
+    addMedicalAid: addMedicalAidAction,
+    deleteMedicalAid: deleteMedicalAidAction,
 }
 
-export function reducer(state:IMedicalAidStoreState = initialState, action:any) {
+export function reducer(state: IMedicalAidStoreState = initialState, action: any) {
     switch (action.type) {
-        case getSlides:
-            return merge({}, { ...state, slideContent: action.data });
+        case getMedicalAidList:
+            return merge({}, { ...state, medicalAidList: action.data });
 
-        case updateSlide:
-            return merge({}, { ...state, activeSlide: action.data });
+        case selectMedicalAid:
+            return merge({}, { ...state, selectedMedicalAid: action.data });
 
-        case addSlide:
-            return merge({}, { ...state, slideContent: [ ...state.slideContent, action.data ] });
+        case updateMedicalAid:
+            if (state.selectedMedicalAid) {
+                const selectedIndex = findIndex( state.medicalAidList, { id: state.selectedMedicalAid.id } );
+                let updateMedicalAidList = state.medicalAidList;
+                updateMedicalAidList[selectedIndex] = action.data;
 
-        case removeSlide:
-            const updateSlides = [ ...state.slideContent ];
-            updateSlides.splice(action.data, 1);
-            return merge({}, { ...state, slideContent: updateSlides });
+                return merge({}, { ...state, medicalAidList: updateMedicalAidList });
+            } else {
+                return state;
+            }
+
+        case addMedicalAid:
+            return merge({}, { ...state, medicalAidList: [...state.medicalAidList, new MedicalAid()] });
+
+        case deleteMedicalAid:
+            const selectedIndex = findIndex( state.medicalAidList, { id: action.data } );
+            const updateMedicalAidList = [...state.medicalAidList];
+            updateMedicalAidList.splice(selectedIndex, 1);
+
+            return merge({}, { ...state, medicalAidList: updateMedicalAidList });
 
         default:
             return state;

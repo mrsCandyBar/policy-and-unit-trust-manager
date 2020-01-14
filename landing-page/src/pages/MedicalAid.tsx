@@ -17,9 +17,8 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
   public static getDerivedStateFromProps(nextProps: MedicalAidStoreState, prevState: IMedicalAidState): IMedicalAidState {
     const newState = {
       ...prevState,
-      activeSlide: nextProps.activeSlide,
-      numberOfSlides: nextProps.slideContent ? nextProps.slideContent.length : 0,
-      slideContent: nextProps.slideContent
+      medicalAidList: nextProps.medicalAidList,
+      selectedMedicalAid: nextProps.selectedMedicalAid
     }
     return newState;
   }
@@ -28,9 +27,8 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
     super(props);
     this.state = {
       classes: this.props.classes,
-      activeSlide: 0,
-      numberOfSlides: 0,
-      slideContent: []
+      medicalAidList: this.props.medicalAidList,
+      selectedMedicalAid: this.props.selectedMedicalAid
     }
   }
 
@@ -39,15 +37,15 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
   }
 
   public initialiseDataSet() {
-    this.props.getSlides();
+    this.props.getMedicalAidList();
   }
 
-  public addNewSlide = () => {
-    this.props.addSlide("New slide");
+  public addMedicalAidPolicy = () => {
+    this.props.addMedicalAid();
   }
 
   render() {
-    const { activeSlide, numberOfSlides, slideContent } = this.state;
+    const { medicalAidList, selectedMedicalAid } = this.state;
 
     return (
       <main>
@@ -55,24 +53,23 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
           Medical Aid Page
         </Typography>
 
-        active slide : {activeSlide}<br />
-        number of slides : {numberOfSlides}
+        all medical aid policies
 
-        {slideContent.map((slide, index) => {
+        {medicalAidList.map(policy => {
           return (
             <React.Fragment>
-              <Typography key={index}>
-                {slide}
+              <Typography key={policy.id}>
+                {policy.label}
               </Typography>
 
-              <Button onClick={() => this.props.removeSlide(index)}>
-                Remove Slide
+              <Button onClick={() => this.props.deleteMedicalAid(policy.id)}>
+                Remove
               </Button>
             </React.Fragment>
           )
         })}
 
-        <Button onClick={this.addNewSlide}>
+        <Button onClick={this.addMedicalAidPolicy}>
           Add Slide
         </Button>
 

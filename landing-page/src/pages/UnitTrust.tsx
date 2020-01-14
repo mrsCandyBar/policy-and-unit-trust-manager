@@ -55,11 +55,11 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
 
         all unit trusts
 
-        {unitTrustList.map((unitTrust, index) => {
+        {unitTrustList.map(unitTrust => {
           return (
             <React.Fragment>
-              <Typography key={index}>
-                {unitTrust.label}
+              <Typography key={unitTrust.id}>
+                {unitTrust.title}
               </Typography>
 
               <Button onClick={() => this.props.deleteUnitTrust(unitTrust.id)}>
