@@ -1,5 +1,8 @@
-class UnitTrust {
+import UniqueIdentifier from './indentifier';
+
+class UnitTrust extends UniqueIdentifier {
     constructor(obj?: any) {
+        super(obj);
         this.label = obj && obj.label ? obj.label : 'New medical aid';
         this.maPlanOption = obj && obj.maPlanOption ? obj.maPlanOption : '';
         this.rewardsProgram = obj && obj.rewardsProgram ? obj.rewardsProgram : false;

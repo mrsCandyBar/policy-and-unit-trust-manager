@@ -1,51 +1,66 @@
 
-import { merge } from 'lodash';
+import { merge, findIndex } from 'lodash';
 import {
-    getSlides,
-    getSlidesAction,
-    updateSlide,
-    updateSlideAction,
-    addSlide,
-    addSlideAction,
-    removeSlide,
-    removeSlideAction,
+    getUnitTrustList,
+    getUnitTrustListAction,
+    selectUnitTrust,
+    selectUnitTrustAction,
+    updateUnitTrust,
+    updateUnitTrustAction,
+    addUnitTrust,
+    addUnitTrustAction,
+    deleteUnitTrust,
+    deleteUnitTrustAction,
     UnitTrustActions
 } from './actions/unitTrustActions';
+import UnitTrust from '../models/unitTrust';
 
 export interface IUnitTrustStoreState {
-    activeSlide: number,
-    numberOfSlides: number,
-    slideContent: Array<any>
+    unitTrustList: Array<UnitTrust>,
+    selectedUnitTrust?: UnitTrust
 }
 
-const initialState:IUnitTrustStoreState = {
-    activeSlide: 0,
-    numberOfSlides: 5,
-    slideContent: []
+const initialState: IUnitTrustStoreState = {
+    unitTrustList: [],
+    selectedUnitTrust: undefined
 }
 
 export const actionCreators = {
-    getSlides: getSlidesAction,
-    updateSlide: updateSlideAction,
-    addSlide: addSlideAction,
-    removeSlide: removeSlideAction,
+    getUnitTrustList: getUnitTrustListAction,
+    selectUnitTrust: selectUnitTrustAction,
+    updateUnitTrust: updateUnitTrustAction,
+    addUnitTrust: addUnitTrustAction,
+    deleteUnitTrust: deleteUnitTrustAction,
 }
 
-export function reducer(state:IUnitTrustStoreState = initialState, action:any) {
+export function reducer(state: IUnitTrustStoreState = initialState, action: any) {
     switch (action.type) {
-        case getSlides:
-            return merge({}, { ...state, slideContent: action.data });
+        case getUnitTrustList:
+            return merge({}, { ...state, unitTrustList: action.data });
 
-        case updateSlide:
-            return merge({}, { ...state, activeSlide: action.data });
+        case selectUnitTrust:
+            return merge({}, { ...state, selectedUnitTrust: action.data });
 
-        case addSlide:
-            return merge({}, { ...state, slideContent: [ ...state.slideContent, action.data ] });
+        case updateUnitTrust:
+            if (state.selectedUnitTrust) {
+                const selectedIndex = findIndex( state.unitTrustList, { id: state.selectedUnitTrust.id } );
+                let updateUnitTrustList = state.unitTrustList;
+                updateUnitTrustList[selectedIndex] = action.data;
 
-        case removeSlide:
-            const updateSlides = [ ...state.slideContent ];
-            updateSlides.splice(action.data, 1);
-            return merge({}, { ...state, slideContent: updateSlides });
+                return merge({}, { ...state, unitTrustList: updateUnitTrustList });
+            } else {
+                return state;
+            }
+
+        case addUnitTrust:
+            return merge({}, { ...state, unitTrustList: [...state.unitTrustList, new UnitTrust()] });
+
+        case deleteUnitTrust:
+            const selectedIndex = findIndex( state.unitTrustList, { id: action.data } );
+            const updateUnitTrustList = [...state.unitTrustList];
+            updateUnitTrustList.splice(selectedIndex, 1);
+
+            return merge({}, { ...state, unitTrustList: updateUnitTrustList });
 
         default:
             return state;

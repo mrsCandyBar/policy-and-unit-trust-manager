@@ -1,7 +1,9 @@
+import UniqueIdentifier from './indentifier';
 import DebitOrder from './debitOrder';
 
-class MedicalAid {
+class MedicalAid extends UniqueIdentifier {
   constructor(obj?: any) {
+    super(obj);
     this.lumpSumContribution = obj && obj.lumpSumContribution ? obj.lumpSumContribution : 0;
     this.debitOrder = obj && obj.debitOrder ? obj.debitOrder : new DebitOrder();
     this.title = obj && obj.title ? obj.title : 'Open a new Unit Trust';

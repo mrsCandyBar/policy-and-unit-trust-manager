@@ -1,35 +1,42 @@
 import { ThunkAction } from 'redux-thunk';
 import { ActionCreator, Dispatch } from 'redux';
+import UnitTrust from '../../models/unitTrust';
 
-export const getSlides = "@@unitTrust/GET";
-export const updateSlide = "@@unitTrust/UPDATE";
-export const addSlide = "@@unitTrust/ADD";
-export const removeSlide = "@@unitTrust/REMOVE";
+export const getUnitTrustList = "@@unitTrust/GET";
+export const selectUnitTrust = "@@unitTrust/SELECT";
+export const updateUnitTrust = "@@unitTrust/UPDATE";
+export const addUnitTrust = "@@unitTrust/ADD";
+export const deleteUnitTrust = "@@unitTrust/REMOVE";
 
-export const getSlidesAction: ActionCreator<ThunkAction<any, any, void, any>> = () => {
-    return(dispatch: Dispatch<any>) => dispatch({type: getSlides, data: ["hello there", "second slide","third slide"] })
+export const getUnitTrustListAction: ActionCreator<ThunkAction<any, any, void, any>> = () => {
+    return(dispatch: Dispatch<any>) => dispatch({type: getUnitTrustList, data: [new UnitTrust()] })
 }
 
-export const updateSlideAction: ActionCreator<ThunkAction<any, any, void, any>> = (slideNo: number) => {
-    return(dispatch: Dispatch<any>) => dispatch({type: updateSlide, data: slideNo })
+export const selectUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (slideNo: number) => {
+    return(dispatch: Dispatch<any>) => dispatch({type: selectUnitTrust, data: slideNo })
 }
 
-export const addSlideAction: ActionCreator<ThunkAction<any, any, void, any>> = (slide:any) => {
-    return(dispatch: Dispatch<any>) => dispatch({type: addSlide, data: slide })
+export const updateUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (unitTrust: UnitTrust) => {
+    return(dispatch: Dispatch<any>) => dispatch({type: updateUnitTrust, data: unitTrust })
 }
 
-export const removeSlideAction: ActionCreator<ThunkAction<any, any, void, any>> = (slideNo:number) => {
-    return(dispatch: Dispatch<any>) => dispatch({type: removeSlide, data: slideNo })
+export const addUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = () => {
+    return(dispatch: Dispatch<any>) => dispatch({type: addUnitTrust })
+}
+
+export const deleteUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (unitTrustId:string) => {
+    return(dispatch: Dispatch<any>) => dispatch({type: deleteUnitTrust, data: unitTrustId })
 }
 
 export interface IUnitTrustReadActions {
-    getSlides(): void;
+    getUnitTrustList(): void;
+    selectUnitTrust(unitTrust: UnitTrust): void;
 }
 
 export interface IUnitTrustWriteActions {
-    updateSlide(slideNo: number): void;
-    addSlide(slide: any): void;
-    removeSlide(slideNo: number): void;
+    updateUnitTrust(unitTrust: UnitTrust): void;
+    addUnitTrust(): void;
+    deleteUnitTrust(unitTrustId: string): void;
 }
 
 export type UnitTrustActions = IUnitTrustReadActions & IUnitTrustWriteActions;

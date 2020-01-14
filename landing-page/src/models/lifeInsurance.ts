@@ -1,7 +1,9 @@
+import UniqueIdentifier from './indentifier';
 import DebitOrder from './debitOrder';
 
-class LifeInsurance {
+class LifeInsurance extends UniqueIdentifier {
     constructor(obj?: any) {
+        super(obj);
         this.totalPremium = obj && obj.totalPremium ? obj.totalPremium : 0;
         this.debitOrder = obj && obj.debitOrder ? obj.debitOrder : new DebitOrder();
         this.disabilityCover = obj && obj.disabilityCover ? obj.disabilityCover : 0;

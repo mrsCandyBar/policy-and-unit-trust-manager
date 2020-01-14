@@ -17,9 +17,8 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
   public static getDerivedStateFromProps(nextProps: UnitTrustStoreState, prevState: IUnitTrustState): IUnitTrustState {
     const newState = {
       ...prevState,
-      activeSlide: nextProps.activeSlide,
-      numberOfSlides: nextProps.slideContent ? nextProps.slideContent.length : 0,
-      slideContent: nextProps.slideContent
+      unitTrustList: nextProps.unitTrustList,
+      selectedUnitTrust: nextProps.selectedUnitTrust
     }
     return newState;
   }
@@ -28,9 +27,8 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
     super(props);
     this.state = {
       classes: this.props.classes,
-      activeSlide: 0,
-      numberOfSlides: 0,
-      slideContent: []
+      unitTrustList: this.props.unitTrustList,
+      selectedUnitTrust: this.props.selectedUnitTrust
     }
   }
 
@@ -39,15 +37,15 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
   }
 
   public initialiseDataSet() {
-    this.props.getSlides();
+    this.props.getUnitTrustList();
   }
 
-  public addNewSlide = () => {
-    this.props.addSlide("New slide");
+  public addUnitTrust = () => {
+    this.props.addUnitTrust();
   }
 
   render() {
-    const { activeSlide, numberOfSlides, slideContent } = this.state;
+    const { unitTrustList, selectedUnitTrust } = this.state;
 
     return (
       <main>
@@ -55,25 +53,24 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
           Unit Trust Page
         </Typography>
 
-        active slide : {activeSlide}<br />
-        number of slides : {numberOfSlides}
+        all unit trusts
 
-        {slideContent.map((slide, index) => {
+        {unitTrustList.map((unitTrust, index) => {
           return (
             <React.Fragment>
               <Typography key={index}>
-                {slide}
+                {unitTrust.label}
               </Typography>
 
-              <Button onClick={() => this.props.removeSlide(index)}>
-                Remove Slide
+              <Button onClick={() => this.props.deleteUnitTrust(unitTrust.id)}>
+                Remove
               </Button>
             </React.Fragment>
           )
         })}
 
-        <Button onClick={this.addNewSlide}>
-          Add Slide
+        <Button onClick={this.addUnitTrust}>
+          Add new unit trust
         </Button>
 
       </main>
