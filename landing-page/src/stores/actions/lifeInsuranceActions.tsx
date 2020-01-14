@@ -12,8 +12,8 @@ export const getLifeInsuranceListAction: ActionCreator<ThunkAction<any, any, voi
     return(dispatch: Dispatch<any>) => dispatch({type: getLifeInsuranceList, data: [new LifeInsurance()] })
 }
 
-export const selectLifeInsuranceAction: ActionCreator<ThunkAction<any, any, void, any>> = (slideNo: number) => {
-    return(dispatch: Dispatch<any>) => dispatch({type: selectLifeInsurance, data: slideNo })
+export const selectLifeInsuranceAction: ActionCreator<ThunkAction<any, any, void, any>> = (lifeInsurance?: LifeInsurance) => {
+    return(dispatch: Dispatch<any>) => dispatch({type: selectLifeInsurance, data: lifeInsurance })
 }
 
 export const updateLifeInsuranceAction: ActionCreator<ThunkAction<any, any, void, any>> = (lifeInsurance: LifeInsurance) => {
@@ -30,7 +30,7 @@ export const deleteLifeInsuranceAction: ActionCreator<ThunkAction<any, any, void
 
 export interface ILifeInsuranceReadActions {
     getLifeInsuranceList(): void;
-    selectLifeInsurance(lifeInsurance: LifeInsurance): void;
+    selectLifeInsurance(lifeInsurance?: LifeInsurance): void;
 }
 
 export interface ILifeInsuranceWriteActions {

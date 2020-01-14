@@ -12,8 +12,8 @@ export const getUnitTrustListAction: ActionCreator<ThunkAction<any, any, void, a
     return(dispatch: Dispatch<any>) => dispatch({type: getUnitTrustList, data: [new UnitTrust()] })
 }
 
-export const selectUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (slideNo: number) => {
-    return(dispatch: Dispatch<any>) => dispatch({type: selectUnitTrust, data: slideNo })
+export const selectUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (unitTrust?: UnitTrust) => {
+    return(dispatch: Dispatch<any>) => dispatch({type: selectUnitTrust, data: unitTrust })
 }
 
 export const updateUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (unitTrust: UnitTrust) => {
@@ -30,7 +30,7 @@ export const deleteUnitTrustAction: ActionCreator<ThunkAction<any, any, void, an
 
 export interface IUnitTrustReadActions {
     getUnitTrustList(): void;
-    selectUnitTrust(unitTrust: UnitTrust): void;
+    selectUnitTrust(unitTrust?: UnitTrust): void;
 }
 
 export interface IUnitTrustWriteActions {

@@ -12,8 +12,8 @@ export const getMedicalAidListAction: ActionCreator<ThunkAction<any, any, void, 
     return(dispatch: Dispatch<any>) => dispatch({type: getMedicalAidList, data: [new MedicalAid()] })
 }
 
-export const selectMedicalAidAction: ActionCreator<ThunkAction<any, any, void, any>> = (slideNo: number) => {
-    return(dispatch: Dispatch<any>) => dispatch({type: selectMedicalAid, data: slideNo })
+export const selectMedicalAidAction: ActionCreator<ThunkAction<any, any, void, any>> = (medicalAid?: MedicalAid) => {
+    return(dispatch: Dispatch<any>) => dispatch({type: selectMedicalAid, data: medicalAid })
 }
 
 export const updateMedicalAidAction: ActionCreator<ThunkAction<any, any, void, any>> = (medicalAid: MedicalAid) => {
@@ -30,7 +30,7 @@ export const deleteMedicalAidAction: ActionCreator<ThunkAction<any, any, void, a
 
 export interface IMedicalAidReadActions {
     getMedicalAidList(): void;
-    selectMedicalAid(medicalAid: MedicalAid): void;
+    selectMedicalAid(medicalAid?: MedicalAid): void;
 }
 
 export interface IMedicalAidWriteActions {
