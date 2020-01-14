@@ -50,7 +50,6 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
 
     const displaySelectedItem = (
       <React.Fragment>
-        Hello
         <Button onClick={() => this.props.selectUnitTrust()}> go back </Button>
         <CustomForm 
           selectedObject={selectedUnitTrust} 

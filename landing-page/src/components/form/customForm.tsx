@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { set, isDate } from 'lodash';
+import { set, split } from 'lodash';
 import { Button, withStyles, Grid, TextField } from '@material-ui/core';
 
 const useStyles = {
@@ -42,48 +42,56 @@ class CustomForm extends Component<ICustomFormProps, ICustomFormState> {
   private onChange = (event: any) => {
     const thisProperty = event && event.currentTarget;
     let updateSelectedObject: any = this.state.selectedObject;
-    set(updateSelectedObject, thisProperty.name, thisProperty.value);
+    set(updateSelectedObject, thisProperty.name, (thisProperty.type === "date" || thisProperty.type === "month") ? event.target.value : thisProperty.value);
     this.setState({
       selectedObject: updateSelectedObject
     })
   }
 
-  public mapProperty = (obj: any) => {
-      const mapAllProperties:any = Object.keys(obj).map((propertyName: any, index: number) => {
-        return typeof (obj[propertyName]) == 'object' ? (
-          isDate(obj[propertyName]) ? (
-            <Grid container key={index}>
-              <Grid item xs={3}>
-                {propertyName}:
-            </Grid>
-              <Grid item xs={9}>
-                <TextField
-                  name={propertyName}
-                  value={obj[propertyName]}
-                  type={propertyName.indexOf('month') ? 'month' : 'date'}
-                  onChange={this.onChange}
-                />
-              </Grid>
-            </Grid>
-          ) : this.mapProperty(obj[propertyName])
-        ) : (
-            <Grid container key={index}>
-              <Grid item xs={3}>
-                {propertyName}:
-              </Grid>
-              <Grid item xs={9}>
-                <TextField
-                  name={propertyName}
-                  value={obj[propertyName]}
-                  type={typeof (obj[propertyName])}
-                  onChange={this.onChange}
-                />
-              </Grid>
-            </Grid>
-          )
-      });
+  public mapProperty = (obj: any, nestedName?: string) => {
+    const mapAllProperties: any = Object.keys(obj).map((propertyName: any, index: number) => {
+      const isObj = typeof (obj[propertyName]) == 'object';
+      const splitByMonth = split(propertyName.toLowerCase(), 'month');
+      const splitByDate = split(propertyName.toLowerCase(), 'date');
+      const splitByDay = split(propertyName.toLowerCase(), 'day');
+      const isDateObj = splitByMonth.length > 1 || splitByDate.length > 1 || splitByDay.length > 1;
 
-      return mapAllProperties;
+      return (isObj || isDateObj) ? (
+        isDateObj ? 
+          this.presentObj(obj, propertyName, splitByMonth.length > 1 ? 'month' : 'date', nestedName) : 
+          this.mapProperty(obj[propertyName], propertyName)
+      ) : this.presentObj(obj, propertyName, typeof (obj[propertyName]), nestedName)
+    });
+
+    return mapAllProperties;
+  }
+
+  public presentObj = (obj: any, propertyName:string, type: string, nestedName?:string) => {
+    return (
+      <Grid container>
+        <Grid item xs={3}>
+          {nestedName ? `${nestedName} ${propertyName}` : propertyName}:
+        </Grid>
+        <Grid item xs={9}>
+          {(type === 'month' || type === 'date') ? (
+            <TextField
+              name={nestedName ? `${nestedName}.${propertyName}` : propertyName}
+              value={obj[propertyName]}
+              type={type === 'month' ? 'month' : 'date'}
+              onChange={this.onChange}
+            />
+          ) : (
+              <TextField
+                name={nestedName ? `${nestedName}.${propertyName}` : propertyName}
+                value={obj[propertyName]}
+                type={typeof (obj[propertyName])}
+                onChange={this.onChange}
+              />
+            )
+          }
+        </Grid>
+      </Grid>
+    )
   }
 
   render() {
