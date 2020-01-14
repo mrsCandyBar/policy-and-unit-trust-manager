@@ -9,6 +9,7 @@ export const addMedicalAid = "@@medicalAid/ADD";
 export const deleteMedicalAid = "@@medicalAid/REMOVE";
 
 export const getMedicalAidListAction: ActionCreator<ThunkAction<any, any, void, any>> = () => {
+    // This is where you place your requests for data from the server : GET
     return(dispatch: Dispatch<any>) => dispatch({type: getMedicalAidList, data: [new MedicalAid()] })
 }
 
@@ -17,7 +18,8 @@ export const selectMedicalAidAction: ActionCreator<ThunkAction<any, any, void, a
 }
 
 export const updateMedicalAidAction: ActionCreator<ThunkAction<any, any, void, any>> = (medicalAid: MedicalAid) => {
-    return(dispatch: Dispatch<any>) => dispatch({type: updateMedicalAid, data: MedicalAid })
+    // This is where you place your requests for data from the server : POST / PUT
+    return(dispatch: Dispatch<any>) => dispatch({type: updateMedicalAid, data: medicalAid })
 }
 
 export const addMedicalAidAction: ActionCreator<ThunkAction<any, any, void, any>> = () => {
@@ -25,6 +27,7 @@ export const addMedicalAidAction: ActionCreator<ThunkAction<any, any, void, any>
 }
 
 export const deleteMedicalAidAction: ActionCreator<ThunkAction<any, any, void, any>> = (medicalAidId: string) => {
+    // This is where you place your requests for data from the server : DELETE
     return(dispatch: Dispatch<any>) => dispatch({type: deleteMedicalAid, data: medicalAidId })
 }
 

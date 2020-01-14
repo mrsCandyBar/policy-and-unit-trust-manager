@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 interface IContactProps {
   classes: any;
-  history: any;
 }
 
 interface IContactState {
@@ -19,12 +18,12 @@ class Contact extends Component<IContactProps, IContactState> {
   }
 
   render() {
-    const { history } = this.props;
     return (
       <main>
         Contact Page<br/>
 
-        <a onClick={() => history.push('/about')} href={'/about'}>Go to not found page</a>
+        <br/>
+        <a href={'mailto:candicekbar@gmail.com'}>candicekbar@gmail.com</a>
       </main>
     )
   }

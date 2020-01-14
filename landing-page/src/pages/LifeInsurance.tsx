@@ -50,7 +50,7 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
 
     const displaySelectedItem = (
       <React.Fragment>
-        <Button onClick={() => this.props.selectLifeInsurance()}> go back </Button>
+        <Button onClick={() => this.props.selectLifeInsurance()} variant="contained" color="primary"> go back </Button>
         <CustomForm 
           selectedObject={selectedLifeInsurance} 
           updateItem={this.props.updateLifeInsurance}
@@ -61,7 +61,6 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
 
     const showListedItems = (
       <React.Fragment>
-        <Typography>all life insurance policies</Typography>
         <List>
           {lifeInsuranceList.map(policy => {
             return (
@@ -71,7 +70,7 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
               >
                 <ListItemText primary={policy.label} />
                 <ListItemSecondaryAction>
-                  <Button onClick={() => this.props.deleteLifeInsurance(policy.id)}>
+                  <Button onClick={() => this.props.deleteLifeInsurance(policy.id)} variant="contained" color="primary">
                     remove
                   </Button>
                 </ListItemSecondaryAction>
@@ -80,7 +79,7 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
           })}
         </List>
 
-        <Button onClick={this.addLifeInsurancePolicy}>
+        <Button onClick={this.addLifeInsurancePolicy} variant="contained" color="primary">
           Add new life insurance policy
         </Button>
       </React.Fragment>
@@ -88,7 +87,7 @@ class LifeInsurance extends Component<ILifeInsuranceProps, ILifeInsuranceState> 
 
     return (
       <main>
-        <Typography>Life Insurance Page</Typography>
+        <Typography>Life Insurance</Typography>
         {selectedLifeInsurance ? displaySelectedItem : showListedItems}
       </main>
     )

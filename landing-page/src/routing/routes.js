@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { 
-    Profile, 
     LifeInsurance, 
     UnitTrust,
     MedicalAid,
@@ -13,10 +12,10 @@ class Routes extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/" component={Profile} />
-                <Route path="/lifeInsurance/:id?" component={LifeInsurance} />
-                <Route path="/unitTrust/:id?" component={UnitTrust} />
-                <Route path="/medicalAid/:id?" component={MedicalAid} />
+                <Route exact path="/" component={LifeInsurance} />
+                <Route path="/lifeInsurance" component={LifeInsurance} />
+                <Route path="/unitTrust" component={UnitTrust} />
+                <Route path="/medicalAid" component={MedicalAid} />
                 <Route path="/contact" component={Contact} />
                 <Route component={NotFound} />
             </Switch>

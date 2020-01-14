@@ -50,7 +50,7 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
 
     const displaySelectedItem = (
       <React.Fragment>
-        <Button onClick={() => this.props.selectUnitTrust()}> go back </Button>
+        <Button onClick={() => this.props.selectUnitTrust()} variant="contained" color="primary"> go back </Button>
         <CustomForm 
           selectedObject={selectedUnitTrust} 
           updateItem={this.props.updateUnitTrust}
@@ -61,7 +61,6 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
 
     const showListedItems = (
       <React.Fragment>
-        <Typography>all unit trusts</Typography>
         <List>
           {unitTrustList.map(unitTrust => {
             return (
@@ -71,7 +70,7 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
               >
                 <ListItemText primary={unitTrust.title} />
                 <ListItemSecondaryAction>
-                  <Button onClick={() => this.props.deleteUnitTrust(unitTrust.id)}>
+                  <Button onClick={() => this.props.deleteUnitTrust(unitTrust.id)} variant="contained" color="primary">
                     remove
                   </Button>
                 </ListItemSecondaryAction>
@@ -80,7 +79,7 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
           })}
         </List>
 
-        <Button onClick={this.addUnitTrust}>
+        <Button onClick={this.addUnitTrust} variant="contained" color="primary">
           Add new unit trust
         </Button>
       </React.Fragment>
@@ -88,7 +87,7 @@ class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
 
     return (
       <main>
-        <Typography>Unit Trust Page</Typography>
+        <Typography>Unit Trust</Typography>
         {selectedUnitTrust ? displaySelectedItem : showListedItems}
       </main>
     )

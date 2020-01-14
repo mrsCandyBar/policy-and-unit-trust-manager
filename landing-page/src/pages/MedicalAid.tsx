@@ -50,7 +50,7 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
 
     const displaySelectedItem = (
       <React.Fragment>
-        <Button onClick={() => this.props.selectMedicalAid()}> go back </Button>
+        <Button onClick={() => this.props.selectMedicalAid()} variant="contained" color="primary"> go back </Button>
         <CustomForm 
           selectedObject={selectedMedicalAid} 
           updateItem={this.props.updateMedicalAid}
@@ -61,7 +61,6 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
 
     const showListedItems = (
       <React.Fragment>
-        <Typography>all medical aid policies</Typography>
         <List>
           {medicalAidList.map(policy => {
             return (
@@ -71,7 +70,7 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
               >
                 <ListItemText primary={policy.label} />
                 <ListItemSecondaryAction>
-                  <Button onClick={() => this.props.deleteMedicalAid(policy.id)}>
+                  <Button onClick={() => this.props.deleteMedicalAid(policy.id)} variant="contained" color="primary">
                     remove
                   </Button>
                 </ListItemSecondaryAction>
@@ -80,15 +79,16 @@ class MedicalAid extends Component<IMedicalAidProps, IMedicalAidState> {
           })}
         </List>
 
-        <Button onClick={this.addMedicalAidPolicy}>
+        <Button onClick={this.addMedicalAidPolicy} variant="contained" color="primary">
           Add new medical aid policy
         </Button>
+
       </React.Fragment>
     )
 
     return (
       <main>
-        <Typography>Medical Aid Page</Typography>
+        <Typography>Medical Aid</Typography>
         {selectedMedicalAid ? displaySelectedItem : showListedItems}
       </main>
     )

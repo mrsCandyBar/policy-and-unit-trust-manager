@@ -1,27 +1,14 @@
 import React, { Component } from 'react';
 import { set, split } from 'lodash';
-import { Button, withStyles, Grid, TextField } from '@material-ui/core';
-
-const useStyles = {
-  root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    padding: '0 30px',
-  },
-};
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
 
 interface ICustomFormProps {
-  classes: any;
   updateItem(event: any): void;
   hideForm(event?: any): void;
   selectedObject: any;
 }
 
 interface ICustomFormState {
-  classes: any;
   selectedObject: any;
 }
 
@@ -29,7 +16,6 @@ class CustomForm extends Component<ICustomFormProps, ICustomFormState> {
   constructor(props: ICustomFormProps) {
     super(props);
     this.state = {
-      classes: this.props.classes,
       selectedObject: this.props.selectedObject
     }
   }
@@ -78,10 +64,12 @@ class CustomForm extends Component<ICustomFormProps, ICustomFormState> {
   public presentObj = (obj: any, propertyName: string, type: string, nestedName?: string) => {
     return (
       <Grid container key={`${propertyName}_${obj.id}`}>
-        <Grid item xs={3}>
+        <Grid item xs={6}>
+          <Typography align="left">
           {nestedName ? `${nestedName} ${propertyName}` : propertyName}:
+          </Typography>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={6}>
           {(type === 'month' || type === 'date') ? (
             <TextField
               name={nestedName ? `${nestedName}.${propertyName}` : propertyName}
@@ -109,17 +97,13 @@ class CustomForm extends Component<ICustomFormProps, ICustomFormState> {
       <Grid container alignContent="center" alignItems="center" justify="center" >
 
         <Grid item xs={12}>
-          Custom Form
+          <br/>
           {this.mapProperty(selectedObject)}
         </Grid>
 
         <Grid item xs={12}>
-          <Grid container>
-            <Grid item xs={3}>&nbsp;</Grid>
-            <Grid item xs={9}>
-              <Button onClick={this.updateAndClose}> update </Button>
-            </Grid>
-          </Grid>
+          <br/>
+          <Button onClick={this.updateAndClose} variant="contained" color="primary"> update </Button>
         </Grid>
 
       </Grid>
@@ -127,4 +111,4 @@ class CustomForm extends Component<ICustomFormProps, ICustomFormState> {
   }
 }
 
-export default withStyles(useStyles)(CustomForm);
+export default CustomForm;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
-import { Header, Footer } from '../general';
+import { Header } from '../general';
 import { customTheme } from '../../assets/css/materialTheme';
 
 class Layout extends React.Component {
@@ -9,7 +9,6 @@ class Layout extends React.Component {
             <MuiThemeProvider theme={customTheme}>
                 <Header />
                 {this.props.children}
-                <Footer />
             </MuiThemeProvider>
         )
     }

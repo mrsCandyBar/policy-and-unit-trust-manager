@@ -9,6 +9,7 @@ export const addUnitTrust = "@@unitTrust/ADD";
 export const deleteUnitTrust = "@@unitTrust/REMOVE";
 
 export const getUnitTrustListAction: ActionCreator<ThunkAction<any, any, void, any>> = () => {
+    // This is where you place your requests for data from the server : GET
     return(dispatch: Dispatch<any>) => dispatch({type: getUnitTrustList, data: [new UnitTrust()] })
 }
 
@@ -17,6 +18,7 @@ export const selectUnitTrustAction: ActionCreator<ThunkAction<any, any, void, an
 }
 
 export const updateUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (unitTrust: UnitTrust) => {
+    // This is where you place your requests for data from the server : POST / PUT
     return(dispatch: Dispatch<any>) => dispatch({type: updateUnitTrust, data: unitTrust })
 }
 
@@ -25,6 +27,7 @@ export const addUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>>
 }
 
 export const deleteUnitTrustAction: ActionCreator<ThunkAction<any, any, void, any>> = (unitTrustId: string) => {
+    // This is where you place your requests for data from the server : DELETE
     return(dispatch: Dispatch<any>) => dispatch({type: deleteUnitTrust, data: unitTrustId })
 }
 
