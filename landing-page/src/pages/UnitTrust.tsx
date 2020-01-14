@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionCreators, AboutStoreState, IAboutStoreState } from '../stores/aboutStore';
+import { actionCreators, UnitTrustStoreState, IUnitTrustStoreState } from '../stores/unitTrustStore';
 import { Button, Typography } from '@material-ui/core';
 
-interface IAboutProps extends AboutStoreState {
+interface IUnitTrustProps extends UnitTrustStoreState {
   classes: any;
 }
 
-interface IAboutState extends IAboutStoreState {
+interface IUnitTrustState extends IUnitTrustStoreState {
   classes: any;
 }
 
-class About extends Component<IAboutProps, IAboutState> {
+class UnitTrust extends Component<IUnitTrustProps, IUnitTrustState> {
 
-  public static getDerivedStateFromProps(nextProps: AboutStoreState, prevState: IAboutState): IAboutState {
+  public static getDerivedStateFromProps(nextProps: UnitTrustStoreState, prevState: IUnitTrustState): IUnitTrustState {
     const newState = {
       ...prevState,
       activeSlide: nextProps.activeSlide,
@@ -24,7 +24,7 @@ class About extends Component<IAboutProps, IAboutState> {
     return newState;
   }
 
-  constructor(props: IAboutProps) {
+  constructor(props: IUnitTrustProps) {
     super(props);
     this.state = {
       classes: this.props.classes,
@@ -52,7 +52,7 @@ class About extends Component<IAboutProps, IAboutState> {
     return (
       <main>
         <Typography>
-          About Page
+          Unit Trust Page
         </Typography>
 
         active slide : {activeSlide}<br />
@@ -82,6 +82,6 @@ class About extends Component<IAboutProps, IAboutState> {
 }
 
 export default connect(
-  (state: any) => state.about,
+  (state: any) => state.unitTrust,
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(About);
+)(UnitTrust);

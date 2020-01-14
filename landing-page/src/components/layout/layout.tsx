@@ -8,6 +8,7 @@ class Layout extends React.Component {
         return (
             <MuiThemeProvider theme={customTheme}>
                 <Header />
+                {this.props.children}
                 <Footer />
             </MuiThemeProvider>
         )

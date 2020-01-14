@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import NavigationMenu from './navigation';
+import Layout from '../components/layout/layout';
 import Routes from './routes';
 
 class Routing extends Component {
   render() {
     return (
       <Router>
-          <NavigationMenu />
+        <Layout>
           <Routes />
+        </Layout>
       </Router>
     )
   }

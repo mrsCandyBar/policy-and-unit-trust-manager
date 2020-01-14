@@ -9,16 +9,16 @@ import {
     addSlideAction,
     removeSlide,
     removeSlideAction,
-    AboutActions
-} from './actions/aboutActions';
+    MedicalAidActions
+} from './actions/medicalAidActions';
 
-export interface IAboutStoreState {
+export interface IMedicalAidStoreState {
     activeSlide: number,
     numberOfSlides: number,
     slideContent: Array<any>
 }
 
-const initialState:IAboutStoreState = {
+const initialState:IMedicalAidStoreState = {
     activeSlide: 0,
     numberOfSlides: 5,
     slideContent: []
@@ -31,7 +31,7 @@ export const actionCreators = {
     removeSlide: removeSlideAction,
 }
 
-export function reducer(state:IAboutStoreState = initialState, action:any) {
+export function reducer(state:IMedicalAidStoreState = initialState, action:any) {
     switch (action.type) {
         case getSlides:
             return merge({}, { ...state, slideContent: action.data });
@@ -52,4 +52,4 @@ export function reducer(state:IAboutStoreState = initialState, action:any) {
     }
 }
 
-export type AboutStoreState = IAboutStoreState & AboutActions
+export type MedicalAidStoreState = IMedicalAidStoreState & MedicalAidActions

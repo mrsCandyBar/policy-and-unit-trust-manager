@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux'
-import * as About from '../aboutStore'
+import * as LifeInsurance from '../lifeInsuranceStore'
+import * as MedicalAid from '../medicalAidStore'
+import * as UnitTrust from '../unitTrustStore'
 
 export default combineReducers({
-  about: About.reducer
+  lifeInsurance: LifeInsurance.reducer,
+  medicalAid: MedicalAid.reducer,
+  unitTrust: UnitTrust.reducer,
 });
