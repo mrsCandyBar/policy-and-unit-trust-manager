@@ -1,4 +1,5 @@
-# Base React Project
+# Personal policy and unit trust manager
 Base project using React, Navigation, Redux, Material-UI and Typescript
 
-clone, run npm install, then npm start
+run in cmd : 
+cd landing-page
